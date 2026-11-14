@@ -266,7 +266,11 @@ function render(){
  $('products').innerHTML=(category==='All'?renderAllDepartments(filtered):(category==='Shirts'&&!term?renderShirtGroups(filtered):productButtons(filtered)))||'<div class="empty">No matches</div>';
  document.querySelectorAll('.product,.shirt-option').forEach(b=>b.onclick=()=>addItem(b.dataset.id));
  document.querySelectorAll('.department').forEach(el=>el.addEventListener('toggle',()=>{const name=el.querySelector('.department-title')?.firstChild?.textContent;if(!name)return;if(el.open)openDepartments.add(name);else openDepartments.delete(name)}));
- $('stockSummary').textContent=state.products.reduce((n,p)=>n+(p.qty||0),0)+' items remaining';renderCart();renderHistory();renderDashboard();updateManagerChoices();
+ renderCart();renderHistory();renderDashboard();updateManagerChoices();
+ const stockCount=state.products.reduce((n,p)=>n+(p.qty||0),0);
+ $('kelliStock').textContent=stockCount.toLocaleString('en-US')+' items';
+ $('kelliToday').textContent=$('dailySales').textContent;
+ $('kelliAllTime').textContent=$('allTimeSales').textContent;
 }
 document.getElementById('products').addEventListener('click',e=>{const b=e.target.closest('[data-shirt-style]');if(!b)return;shirtStyle=b.dataset.shirtStyle;render();});
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -429,4 +433,4 @@ function saveProductEdits(){
 setManagerMode('stock');
 
 $('search').addEventListener('input',e=>{term=e.target.value.toLowerCase();render()});render();
-</script><script>if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("./sw.js").catch(()=>{});</script><script>(function(){function update(){let stock=document.getElementById('stockSummary'),today=document.getElementById('dailySales'),all=document.getElementById('allTimeSales');let a=document.getElementById('kelliStock'),b=document.getElementById('kelliToday'),c=document.getElementById('kelliAllTime');if(stock&&a){let m=stock.textContent.match(/[\d,]+/);a.textContent=m?m[0]+' items':'—'}if(today&&b)b.textContent=today.textContent;if(all&&c)c.textContent=all.textContent}update();let target=document.getElementById('dailySales');if(target)new MutationObserver(update).observe(target,{childList:true,characterData:true,subtree:true});let stock=document.getElementById('stockSummary');if(stock)new MutationObserver(update).observe(stock,{childList:true,characterData:true,subtree:true});let all=document.getElementById('allTimeSales');if(all)new MutationObserver(update).observe(all,{childList:true,characterData:true,subtree:true});})();</script></body></html>
+</script><script>if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("./sw.js").catch(()=>{});</script></body></html>
