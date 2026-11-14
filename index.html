@@ -38,14 +38,63 @@ main,.top,.layout,.panel,.products,.product{min-width:0}
   .tabs { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   input { max-width: 100%; min-width: 0; }
 }
-</style></head><body><header><div class="logo"><strong>ish.</strong><small>because close enough counts.</small></div><div style="text-align:right"><b>Market checkout</b><small>less accounting. more creating.</small></div></header><main><div class="top"><div><h1 style="margin:0">sell the cute stuff. ♡</h1><div class="brandline">little shop. big personality.</div><div class="muted">Show me what matters. Spare me the rest.</div></div><span class="pill" id="stockSummary">437 opening items</span></div><div class="layout"><section class="panel"><h2>pick their goodies. ♡</h2><input id="search" placeholder="Find a design, shirt size, or item…" aria-label="Search products"><div class="tabs" id="tabs"></div><div class="products" id="products"></div></section><section class="panel"><h2>the little haul.</h2><div class="switch"><button id="visitor" class="selected" onclick="setCustomer('visitor')">Visitor pricing</button><button id="local" onclick="setCustomer('local')">Local pricing ♡</button></div><div id="cart"></div><div class="total"><span>Total</span><span id="total">$0.00</span></div><div class="muted">How are they paying?</div><div class="pay" id="pay"><button onclick="setPayment('Cash')">Cash</button><button onclick="setPayment('Venmo')">Venmo</button><button onclick="setPayment('Cash App')">Cash App</button></div><button class="primary checkout" id="complete" onclick="completeSale()" disabled>Mark paid ✓</button><div class="status" id="status"></div><div class="notice">Prices marked TBD need confirmation before checkout. Payment is collected outside ish.; tap “Mark paid” only after receiving it. Sales and stock stay on this device/browser until exported.</div></section></div><section class="panel history"><h2>the paper trail. (ugh.)</h2><div class="muted">No account or internet required. Save a complete backup to protect your sales and stock. CSV downloads are handy for spreadsheets, but the complete backup is what you can restore into ish.</div><div class="tools"><button onclick="exportSales()">Download sales CSV</button><button onclick="exportStock()">Download inventory CSV</button><button onclick="exportFullBackup()">Save complete backup ♡</button><button onclick="document.getElementById('restoreFile').click()">Restore complete backup</button><input id="restoreFile" type="file" accept=".json,application/json" hidden onchange="restoreFullBackup(event)"><button onclick="undoSale()">Undo last sale</button><button onclick="resetApp()">Restore opening inventory</button></div><div id="history"></div></section><div class="brandfooter"><b>ish.</b> &nbsp; because close enough counts. &nbsp; ♡<br>less accounting. more creating.</div></main><script>
-const opening=[{"id":"sticker","name":"Sticker","category":"Gifts","qty":50,"visitor":5,"local":5,"notes":"Optional customer freebie at your discretion; checkout price is $5"},{"id": "hat-Youth", "name": "Kids hat + patch", "category": "Hats", "qty": 90, "visitor": 20, "local": 15, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "hat-Mid-tier adult", "name": "OTTO / mid-tier hat + patch", "category": "Hats", "qty": 89, "visitor": 28, "local": 20, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "hat-Premium adult", "name": "Premium hat + patch", "category": "Hats", "qty": 57, "visitor": 38, "local": 28, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "tote-HO HO HOld the Ferry", "name": "HO HO HOld the Ferry tote", "category": "Totes", "qty": 13, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Nauti List", "name": "Nauti List tote", "category": "Totes", "qty": 7, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Tight Lines. Loose Morals.", "name": "Tight Lines. Loose Morals. tote", "category": "Totes", "qty": 5, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Zero Shucks Given", "name": "Zero Shucks Given tote", "category": "Totes", "qty": 6, "visitor": 24, "local": 18, "notes": ""}, {"id": "ditty", "name": "Little ditty bag", "category": "Gifts", "qty": 11, "visitor": 12, "local": 10, "notes": ""}, {"id": "glass", "name": "Pint glass", "category": "Gifts", "qty": 16, "visitor": 12, "local": 8, "notes": ""}, {"id": "shirt-10", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · M", "category": "Shirts", "qty": 2, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-11", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · L", "category": "Shirts", "qty": 9, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-12", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · XL", "category": "Shirts", "qty": 7, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-13", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · 2XL", "category": "Shirts", "qty": 7, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-14", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · 3XL", "category": "Shirts", "qty": 3, "visitor": 48, "local": 44, "notes": ""}, {"id": "shirt-15", "name": "Cast First. Questions Later. · Comfort Colors · seafoam blue · short sleeve · Sizes not yet reported", "category": "Shirts", "qty": 9, "visitor": 25, "local": 20, "notes": ""}, {"id": "shirt-16", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · M", "category": "Shirts", "qty": 3, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-17", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-18", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · XL", "category": "Shirts", "qty": 4, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-19", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-20", "name": "Tight Lines. Loose Morals. · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-21", "name": "Tight Lines. Loose Morals. · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-22", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · M", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-23", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 2, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-24", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-25", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · S", "category": "Shirts", "qty": 2, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-26", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · M", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-27", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · L", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-28", "name": "Drum & Disorderly · Gildan · light blue · no pocket · M", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-29", "name": "Drum & Disorderly · Gildan · light blue · no pocket · L", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-30", "name": "Drum & Disorderly · Gildan · light blue · no pocket · XL", "category": "Shirts", "qty": 2, "visitor": 28, "local": 22, "notes": ""}, {"id": "onesies", "name": "Baby onesie · assorted", "category": "Baby", "qty": 21, "visitor": 15, "local": 12, "notes": ""}, {"id": "beanies", "name": "Beanie + patch · assorted", "category": "Hats", "qty": 12, "visitor": 22, "local": 18, "notes": ""}, {"id": "extra-Extra small patch", "name": "Extra small patch", "category": "Add-ons", "qty": null, "visitor": 6, "local": 5, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Extra large patch", "name": "Extra large patch", "category": "Add-ons", "qty": null, "visitor": 8, "local": 6, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Extra leatherette patch", "name": "Extra leatherette patch", "category": "Add-ons", "qty": null, "visitor": 12, "local": 10, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Leatherette upgrade on included patch", "name": "Leatherette upgrade", "category": "Add-ons", "qty": null, "visitor": 4, "local": 4, "notes": "Patch stock not counted; no inventory decrement"}];
+
+/* In-app stock and product management. Compact and touch-friendly. */
+.inventory-manager{margin-top:20px}
+.inventory-manager summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;font:700 21px Georgia,serif;font-style:italic}
+.inventory-manager summary::-webkit-details-marker{display:none}
+.inventory-manager summary::after{content:'＋';font:24px 'Courier New',monospace;color:#b46b54}
+.inventory-manager[open] summary::after{content:'−'}
+.manager-intro{margin:10px 0 15px}
+.manager-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.manager-actions button{flex:1;min-width:115px}
+.manager-form{border-top:1px dashed #d4c8b5;padding-top:16px}
+.manager-form label{display:block;margin:10px 0 5px;font:700 12px 'Courier New',monospace;color:#28483f}
+.manager-form input,.manager-form select{width:100%;max-width:100%;display:block;padding:12px;border:1px solid #c9c3b5;border-radius:4px;margin:0;background:#fffef9;color:#263f3a;font:14px 'Courier New',monospace}
+.manager-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+.manager-form .manager-save{margin-top:16px;width:100%;background:#28483f;color:#fffdf4;font-size:14px;padding:14px}
+.manager-form .manager-message{min-height:20px;font:12px/1.5 'Courier New',monospace;margin-top:10px;color:#28483f}
+.manager-tip{padding:10px;background:#f4e9d1;border-left:4px solid #d77f69;font:12px/1.5 'Courier New',monospace;margin-top:14px}
+@media(max-width:450px){.manager-grid{grid-template-columns:1fr}.manager-actions button{min-width:0;font-size:11px;padding:10px 6px}}
+
+/* ish. Market edition — a small hello, not a whole extra screen */
+.daily{margin:0 0 17px;padding:15px 18px;background:#253d38;color:#fff8ea;border:2px solid #253d38;border-radius:9px;position:relative;box-shadow:4px 4px 0 #d7a48f}
+.daily:before{content:'✳';position:absolute;right:15px;top:11px;font-size:19px;color:#e9ae91}
+.daily-label{display:flex;align-items:center;gap:8px;font:700 11px 'Courier New',monospace;letter-spacing:1.8px;text-transform:uppercase;color:#e8bd9c}
+.daily-line{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:8px 0 3px}
+.daily-amount{font:italic 700 clamp(35px,8vw,55px) Georgia,serif;line-height:1;letter-spacing:-1.4px}
+.daily-bits{font:11px/1.5 'Courier New',monospace;text-align:right;color:#f2dfc8}
+.daily-note{font:italic 13px Georgia,serif;color:#f0cbb6;margin:8px 0 0}
+.daily details{margin-top:9px;border-top:1px solid #647b70;padding-top:8px}
+.daily details summary{font:700 11px 'Courier New',monospace;color:#fff6e9;cursor:pointer;list-style:none;display:inline-block;padding:5px 0}
+.daily details summary::-webkit-details-marker{display:none}
+.daily-more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:7px}
+.daily-more div{border:1px solid #63786b;padding:9px;font:11px/1.5 'Courier New',monospace}
+.daily-more strong{display:block;color:#fff;font-size:15px}
+.shirt-groups{display:grid;gap:8px}
+.shirt-group{background:#f3ede1;border:1.5px solid #d3c8b8;border-radius:5px;overflow:hidden}
+.shirt-group:nth-child(3n+2){background:#f9e8df}.shirt-group:nth-child(3n+3){background:#e8ede5}
+.shirt-group>summary{padding:14px;display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;font:700 17px Georgia,serif;list-style:none}
+.shirt-group>summary::-webkit-details-marker{display:none}
+.shirt-group>summary small{font:11px 'Courier New',monospace;white-space:nowrap;color:#52665a}
+.shirt-options{padding:0 10px 10px;display:grid;gap:5px}
+.shirt-option{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;padding:10px;background:#fffdf8;font:12px/1.4 'Courier New',monospace}
+.shirt-option span{min-width:0}.shirt-option b{display:block;color:#243f35;font-size:15px}
+.shirt-option em{font-style:normal;white-space:nowrap;font-weight:bold;color:#274940}
+@media(max-width:740px){.daily{padding:14px}.daily-more{grid-template-columns:repeat(2,minmax(0,1fr))}.shirt-group>summary{font-size:15px}.shirt-option{padding:10px 8px;font-size:11px}}
+</style></head><body><header><div class="logo"><strong>ish.</strong><small>because close enough counts.</small></div><div style="text-align:right"><b>Market checkout</b><small>less accounting. more creating.</small></div></header><main><div class="top"><div><h1 style="margin:0">sell the cute stuff. ♡</h1><div class="brandline">little shop. big personality.</div><div class="muted">Show me what matters. Spare me the rest.</div></div><span class="pill" id="stockSummary">457 opening items</span></div><aside class="daily" aria-label="Today’s sales dashboard"><div class="daily-label">✦ the money part. <span id="dailyDate"></span></div><div class="daily-line"><div class="daily-amount" id="dailySales">$0.00</div><div class="daily-bits"><b id="dailyItems">0</b> items sold<br><b id="dailyTx">0</b> sales today</div></div><p class="daily-note" id="dailyNote">Go make something lovely. ♡</p><details><summary>↗ see the bigger picture</summary><div class="daily-more"><div>All-time sales<strong id="allTimeSales">$0.00</strong></div><div>Transactions<strong id="allTimeTx">0</strong></div><div>Today · Cash<strong id="todayCash">$0.00</strong></div><div>Today · Venmo / Cash App<strong id="todayDigital">$0.00</strong></div></div></details></aside><div class="layout"><section class="panel"><h2>pick their goodies. ♡</h2><input id="search" placeholder="Find a design, shirt size, or item…" aria-label="Search products"><div class="tabs" id="tabs"></div><div class="products" id="products"></div></section><section class="panel"><h2>the little haul.</h2><div class="switch"><button id="visitor" class="selected" onclick="setCustomer('visitor')">Visitor pricing</button><button id="local" onclick="setCustomer('local')">Local pricing ♡</button></div><div id="cart"></div><div class="total"><span>Total</span><span id="total">$0.00</span></div><div class="muted">How are they paying?</div><div class="pay" id="pay"><button onclick="setPayment('Cash')">Cash</button><button onclick="setPayment('Venmo')">Venmo</button><button onclick="setPayment('Cash App')">Cash App</button></div><button class="primary checkout" id="complete" onclick="completeSale()" disabled>Mark paid ✓</button><div class="status" id="status"></div><div class="notice">Prices marked TBD need confirmation before checkout. Payment is collected outside ish.; tap “Mark paid” only after receiving it. Sales and stock stay on this device/browser until exported.</div></section></div><details class="panel inventory-manager" id="inventoryManager"><summary>the stockroom. ♡</summary><div class="manager-intro muted">New arrivals? Fresh idea? Change a price? Do it here — no GitHub required.</div><div class="manager-actions"><button type="button" id="modeStock" onclick="setManagerMode('stock')">＋ Add stock</button><button type="button" id="modeNew" onclick="setManagerMode('new')">✦ New product</button><button type="button" id="modeEdit" onclick="setManagerMode('edit')">✎ Edit product</button></div><div id="managerContent" class="manager-form"></div><div class="manager-tip">Changes save on this device only. Use <b>Save complete backup ♡</b> below to protect your updates. They don't automatically sync to your computer.</div></details><section class="panel history"><h2>the paper trail. (ugh.)</h2><div class="muted">No account or internet required. Save a complete backup to protect your sales and stock. CSV downloads are handy for spreadsheets, but the complete backup is what you can restore into ish.</div><div class="tools"><button onclick="exportSales()">Download sales CSV</button><button onclick="exportStock()">Download inventory CSV</button><button onclick="exportFullBackup()">Save complete backup ♡</button><button onclick="document.getElementById('restoreFile').click()">Restore complete backup</button><input id="restoreFile" type="file" accept=".json,application/json" hidden onchange="restoreFullBackup(event)"><button onclick="undoSale()">Undo last sale</button><button onclick="resetApp()">Restore opening inventory</button></div><div id="history"></div></section><div class="brandfooter"><b>ish.</b> &nbsp; because close enough counts. &nbsp; ♡<br>less accounting. more creating.</div></main><script>
+const opening=[{"id":"sticker","name":"Sticker","category":"Gifts","qty":50,"visitor":5,"local":5,"notes":"Optional customer freebie at your discretion; checkout price is $5"},{"id": "hat-Youth", "name": "Kids hat + patch", "category": "Hats", "qty": 90, "visitor": 20, "local": 15, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "hat-Mid-tier adult", "name": "OTTO / mid-tier hat + patch", "category": "Hats", "qty": 89, "visitor": 28, "local": 20, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "hat-Premium adult", "name": "Premium hat + patch", "category": "Hats", "qty": 77, "visitor": 38, "local": 28, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "tote-HO HO HOld the Ferry", "name": "HO HO HOld the Ferry tote", "category": "Totes", "qty": 13, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Nauti List", "name": "Nauti List tote", "category": "Totes", "qty": 7, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Tight Lines. Loose Morals.", "name": "Tight Lines. Loose Morals. tote", "category": "Totes", "qty": 5, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Zero Shucks Given", "name": "Zero Shucks Given tote", "category": "Totes", "qty": 6, "visitor": 24, "local": 18, "notes": ""}, {"id": "ditty", "name": "Little ditty bag", "category": "Gifts", "qty": 11, "visitor": 12, "local": 10, "notes": ""}, {"id": "glass", "name": "Pint glass", "category": "Gifts", "qty": 16, "visitor": 12, "local": 8, "notes": ""}, {"id": "shirt-10", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · M", "category": "Shirts", "qty": 2, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-11", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · L", "category": "Shirts", "qty": 9, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-12", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · XL", "category": "Shirts", "qty": 7, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-13", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · 2XL", "category": "Shirts", "qty": 7, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-14", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · 3XL", "category": "Shirts", "qty": 3, "visitor": 48, "local": 44, "notes": ""}, {"id": "shirt-15", "name": "Cast First. Questions Later. · Comfort Colors · seafoam blue · short sleeve · Sizes not yet reported", "category": "Shirts", "qty": 9, "visitor": 25, "local": 20, "notes": ""}, {"id": "shirt-16", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · M", "category": "Shirts", "qty": 3, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-17", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-18", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · XL", "category": "Shirts", "qty": 4, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-19", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-20", "name": "Tight Lines. Loose Morals. · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-21", "name": "Tight Lines. Loose Morals. · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-22", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · M", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-23", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 2, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-24", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-25", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · S", "category": "Shirts", "qty": 2, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-26", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · M", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-27", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · L", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-28", "name": "Drum & Disorderly · Gildan · light blue · no pocket · M", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-29", "name": "Drum & Disorderly · Gildan · light blue · no pocket · L", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-30", "name": "Drum & Disorderly · Gildan · light blue · no pocket · XL", "category": "Shirts", "qty": 2, "visitor": 28, "local": 22, "notes": ""}, {"id": "onesies", "name": "Baby onesie · assorted", "category": "Baby", "qty": 21, "visitor": 15, "local": 12, "notes": ""}, {"id": "beanies", "name": "Beanie + patch · assorted", "category": "Hats", "qty": 12, "visitor": 22, "local": 18, "notes": ""}, {"id": "extra-Extra small patch", "name": "Extra small patch", "category": "Add-ons", "qty": null, "visitor": 6, "local": 5, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Extra large patch", "name": "Extra large patch", "category": "Add-ons", "qty": null, "visitor": 8, "local": 6, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Extra leatherette patch", "name": "Extra leatherette patch", "category": "Add-ons", "qty": null, "visitor": 12, "local": 10, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Leatherette upgrade on included patch", "name": "Leatherette upgrade", "category": "Add-ons", "qty": null, "visitor": 4, "local": 4, "notes": "Patch stock not counted; no inventory decrement"}];
 const storageKey='ish-market-v1';let state;
 try{state=JSON.parse(localStorage.getItem(storageKey))}catch(e){}
 if(!state||!Array.isArray(state.products)){state={products:structuredClone(opening),sales:[]}}
 // Catalog migrations add new products without changing previously recorded sales or stock.
 // A restored older backup will also receive newly introduced products on the next app load.
-if(state.catalogVersion!==6 || !state.products.some(p=>p.id==='sticker')){
+if(state.catalogVersion!==7 || !state.products.some(p=>p.id==='sticker')){
+  // One-time delivery: add 20 premium hats on upgrade from prior catalog versions.
+  if((state.catalogVersion||0)<7){
+    const premium=state.products.find(p=>p.id==='hat-Premium adult');
+    if(premium && typeof premium.qty==='number') premium.qty+=20;
+  }
   const latest=new Map(opening.map(p=>[p.id,p]));
   state.products=state.products.map(p=>{
     const fresh=latest.get(p.id);
@@ -53,7 +102,7 @@ if(state.catalogVersion!==6 || !state.products.some(p=>p.id==='sticker')){
   });
   const existing=new Set(state.products.map(p=>p.id));
   for(const fresh of opening){if(!existing.has(fresh.id))state.products.push(structuredClone(fresh));}
-  state.catalogVersion=6;
+  state.catalogVersion=7;
   localStorage.setItem(storageKey,JSON.stringify(state));
 }
 let cart={},customer='visitor',payment='',category='All',term='';
@@ -61,8 +110,31 @@ const $=id=>document.getElementById(id),money=n=>'$'+Number(n||0).toFixed(2),sav
 function setCustomer(v){customer=v;$('visitor').classList.toggle('selected',v==='visitor');$('local').classList.toggle('selected',v==='local');render()}
 function setPayment(v){payment=v;document.querySelectorAll('#pay button').forEach(b=>b.classList.toggle('selected',b.textContent===v));renderCart()}
 function available(p){return p.qty===null?Infinity:p.qty-(cart[p.id]||0)}
-function render(){let cats=['All',...new Set(state.products.map(p=>p.category))];$('tabs').innerHTML=cats.map(c=>`<button class="${category===c?'selected':''}" data-cat="${escapeHTML(c)}">${escapeHTML(c)}</button>`).join('');document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{category=b.dataset.cat;render()});let filtered=state.products.filter(p=>(category==='All'||p.category===category)&&(!term||p.name.toLowerCase().includes(term)));
-$('products').innerHTML=filtered.map(p=>`<button class="product" data-id="${escapeHTML(p.id)}" ${available(p)<=0?'disabled':''}><b>${escapeHTML(p.name)}</b><span>${p.qty===null?'Untracked':p.qty+' left'}${p.notes&&p.notes.includes('estimated')?' · estimated':''}</span><div class="price">${p[customer]===null?'Price TBD':money(p[customer])}</div></button>`).join('')||'<div class="empty">No matches</div>';document.querySelectorAll('.product').forEach(b=>b.onclick=()=>addItem(b.dataset.id));$('stockSummary').textContent=state.products.reduce((n,p)=>n+(p.qty||0),0)+' items remaining';renderCart();renderHistory()}
+function renderDashboard(){
+ const today=new Date();const dateLabel=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric'}).format(today);
+ $('dailyDate').textContent='· '+dateLabel;
+ const todayKey=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+ const onDay=s=>{const d=new Date(s.date);return !Number.isNaN(d.getTime()) && (d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate())===todayKey};
+ const daily=state.sales.filter(onDay),sales=daily.reduce((n,s)=>n+Number(s.total||0),0),units=daily.reduce((n,s)=>n+s.lines.reduce((x,l)=>x+l.qty,0),0);
+ $('dailySales').textContent=money(sales);$('dailyTx').textContent=daily.length;$('dailyItems').textContent=units;
+ $('dailyNote').textContent=daily.length?'Look at you, making money doing things you love. ♡':'Go make something lovely. ♡';
+ $('allTimeSales').textContent=money(state.sales.reduce((n,s)=>n+Number(s.total||0),0));$('allTimeTx').textContent=state.sales.length;
+ $('todayCash').textContent=money(daily.filter(s=>s.payment==='Cash').reduce((n,s)=>n+Number(s.total||0),0));
+ $('todayDigital').textContent=money(daily.filter(s=>s.payment!=='Cash').reduce((n,s)=>n+Number(s.total||0),0));
+}
+function renderShirtGroups(items){
+ const groups=new Map();for(const p of items){const label=p.name.split(' · ')[0];if(!groups.has(label))groups.set(label,[]);groups.get(label).push(p)}
+ return '<div class="shirt-groups">'+[...groups.entries()].sort(([a],[b])=>a.localeCompare(b)).map(([design,options])=>{
+ const valid=options.reduce((n,p)=>n+Math.max(0,p.qty||0),0);
+ const buttons=options.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})).map(p=>{
+  const parts=p.name.split(' · ');const size=parts.at(-1),style=parts.slice(1,-1).join(' · ');
+  return `<button class="shirt-option" data-id="${escapeHTML(p.id)}" ${available(p)<=0?'disabled':''}><span><b>${escapeHTML(size)}</b>${escapeHTML(style)}<br>${p.qty===null?'untracked':p.qty+' left'}</span><em>${p[customer]===null?'TBD':money(p[customer])} ＋</em></button>`
+ }).join('');
+ return `<details class="shirt-group"><summary><span>${escapeHTML(design)}</span><small>${valid} left ▾</small></summary><div class="shirt-options">${buttons}</div></details>`
+ }).join('')+'</div>';
+}
+function render(){let cats=['All',...new Set(state.products.map(p=>p.category))];$('tabs').innerHTML=cats.map(c=>`<button class="${category===c?'selected':''}" data-cat="${escapeHTML(c)}">${escapeHTML(c)}</button>`).join('');document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{category=b.dataset.cat;render()});let filtered=state.products.filter(p=>(category==='All'||p.category===category)&&(!term||p.name.toLowerCase().includes(term)));if(category==='Shirts')filtered.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'}));
+$('products').innerHTML=((category==='Shirts' && !term)?renderShirtGroups(filtered):filtered.map(p=>`<button class="product" data-id="${escapeHTML(p.id)}" ${available(p)<=0?'disabled':''}><b>${escapeHTML(p.name)}</b><span>${p.qty===null?'Untracked':p.qty+' left'}${p.notes&&p.notes.includes('estimated')?' · estimated':''}</span><div class="price">${p[customer]===null?'Price TBD':money(p[customer])}</div></button>`).join(''))||'<div class="empty">No matches</div>';document.querySelectorAll('.product,.shirt-option').forEach(b=>b.onclick=()=>addItem(b.dataset.id));$('stockSummary').textContent=state.products.reduce((n,p)=>n+(p.qty||0),0)+' items remaining';renderCart();renderHistory();renderDashboard();updateManagerChoices()}
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function addItem(id){let p=state.products.find(x=>x.id===id);if(p[customer]===null){alert('Price TBD — confirm a price before selling this item.');return}if(available(p)<=0)return;cart[id]=(cart[id]||0)+1;render()}
 function changeQty(id,n){cart[id]=(cart[id]||0)+n;if(cart[id]<=0)delete cart[id];render()}
@@ -107,9 +179,106 @@ async function restoreFullBackup(e){
   if(!confirm('Last check: have you downloaded a complete backup of your CURRENT data first? Restoring replaces it.'))return;
   const replacement={products:backup.products,sales:backup.sales,catalogVersion:backup.catalogVersion||5};
   try{localStorage.setItem(storageKey,JSON.stringify(replacement))}catch(err){alert('Could not save the restored data in this browser. Nothing was changed.');return;}
-  state=replacement; if(!state.products.some(p=>p.id==='sticker')){state.products.push(structuredClone(opening.find(p=>p.id==='sticker')));state.catalogVersion=6;localStorage.setItem(storageKey,JSON.stringify(state));} cart={};payment='';customer='visitor';category='All';term='';$('search').value='';$('visitor').classList.add('selected');$('local').classList.remove('selected');document.querySelectorAll('#pay button').forEach(b=>b.classList.remove('selected'));
+  state=replacement; if(!state.products.some(p=>p.id==='sticker')){state.products.push(structuredClone(opening.find(p=>p.id==='sticker')));localStorage.setItem(storageKey,JSON.stringify(state));} if((state.catalogVersion||0)<7){const p=state.products.find(p=>p.id==='hat-Premium adult');if(p&&typeof p.qty==='number')p.qty+=20;state.catalogVersion=7;localStorage.setItem(storageKey,JSON.stringify(state));} cart={};payment='';customer='visitor';category='All';term='';$('search').value='';$('visitor').classList.add('selected');$('local').classList.remove('selected');document.querySelectorAll('#pay button').forEach(b=>b.classList.remove('selected'));
   $('status').textContent='Backup restored! ♡ '+state.sales.length+' sales and inventory loaded.';render();
 }
-function resetApp(){if(!confirm('Erase ALL sales and restore the original 437 inventory counts on this device? Export backups first.'))return;if(!confirm('Last check: really erase the sales history?'))return;state={products:structuredClone(opening),sales:[]};cart={};save();render()}
+function resetApp(){if(!confirm('Erase ALL sales and restore the original 457 inventory counts on this device? Export backups first.'))return;if(!confirm('Last check: really erase the sales history?'))return;state={products:structuredClone(opening),sales:[]};cart={};save();render()}
+
+// Product management is stored in the same device-local state as checkout.
+// Never mutate opening or reassign IDs: past sales reference those IDs.
+let managerMode='stock';
+function managerMsg(message, bad=false){const el=$('managerFeedback');if(el){el.textContent=message;el.style.color=bad?'#ac4b38':'#28483f';}}
+function managerChoices(selected=''){
+  return state.products.map(p=>`<option value="${escapeHTML(p.id)}" ${p.id===selected?'selected':''}>${escapeHTML(p.name)}${p.qty===null?' · untracked':' · '+p.qty+' left'}</option>`).join('');
+}
+function updateManagerChoices(){
+  const el=$('managerProduct');if(!el)return;
+  const old=el.value;el.innerHTML=managerChoices(old);
+  if(old&&state.products.some(p=>p.id===old))el.value=old;
+}
+function managerNumber(raw,label,allowBlank=false){
+  const value=String(raw).trim();
+  if(allowBlank&&value==='')return null;
+  if(value===''||!/^\d+(?:\.\d{1,2})?$/.test(value)){throw new Error(label+' must be a nonnegative amount (up to 2 decimals).');}
+  const n=Number(value);
+  if(!Number.isFinite(n)||n>1000000)throw new Error(label+' is too large.');
+  return n;
+}
+function managerWhole(raw,label){
+  const v=String(raw).trim();
+  if(!/^\d+$/.test(v)||Number(v)>1000000)throw new Error(label+' must be a whole number from 0 to 1,000,000.');
+  return Number(v);
+}
+function setManagerMode(mode){
+  managerMode=mode;
+  for(const key of ['stock','new','edit'])$('mode'+key[0].toUpperCase()+key.slice(1)).classList.toggle('selected',mode===key);
+  let body='';
+  if(mode==='stock'){
+    body=`<label for="managerProduct">Which product arrived?</label><select id="managerProduct" onchange="showStockQty()">${managerChoices()}</select><div class="muted" id="currentStock"></div><label for="managerAmount">How many are you adding?</label><input id="managerAmount" type="number" min="1" step="1" inputmode="numeric" value="1"><button type="button" class="manager-save" onclick="addStockNow()">Add to stock ♡</button>`;
+  }else if(mode==='new'){
+    body=`<label for="newName">What shall we call it?</label><input id="newName" maxlength="160" placeholder="e.g. Fish charm keychain"><label for="newCategory">Category</label><select id="newCategory"><option value="">Pick a category…</option>${[...new Set(state.products.map(p=>p.category))].map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('')}<option value="__new__">✦ Create a new category</option></select><label for="newCustomCat">New category name (only if needed)</label><input id="newCustomCat" maxlength="60" placeholder="e.g. Charms"><label for="newQty">Starting quantity</label><input id="newQty" type="number" min="0" step="1" inputmode="numeric" value="1"><div class="manager-grid"><div><label for="newVisitor">Visitor price ($)</label><input id="newVisitor" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></div><div><label for="newLocal">Local price ($)</label><input id="newLocal" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Same as visitor"></div></div><div class="muted" style="margin-top:7px">Leave local price blank to use the visitor price. Leave either price blank for “Price TBD.”</div><button type="button" class="manager-save" onclick="addNewProductNow()">Add my new product ♡</button>`;
+  }else{
+    body=`<label for="managerProduct">Which product are we editing?</label><select id="managerProduct" onchange="loadProductEditor()">${managerChoices()}</select><label for="editName">Product name</label><input id="editName" maxlength="160"><label for="editCategory">Category</label><input id="editCategory" maxlength="60"><div class="manager-grid"><div><label for="editQty">Quantity remaining</label><input id="editQty" type="number" min="0" step="1" inputmode="numeric"></div><div><label for="editVisitor">Visitor price ($)</label><input id="editVisitor" type="number" min="0" step="0.01" inputmode="decimal"></div></div><label for="editLocal">Local price ($)</label><input id="editLocal" type="number" min="0" step="0.01" inputmode="decimal"><div class="muted" style="margin-top:7px">Blank price = Price TBD. Quantity blank = untracked. Editing a product won't rewrite past sales.</div><button type="button" class="manager-save" onclick="saveProductEdits()">Save changes ♡</button>`;
+  }
+  $('managerContent').innerHTML=body+'<div class="manager-message" id="managerFeedback" aria-live="polite"></div>';
+  if(mode==='stock')showStockQty();
+  if(mode==='edit')loadProductEditor();
+}
+function showStockQty(){const p=state.products.find(x=>x.id===$('managerProduct')?.value);const out=$('currentStock');if(out&&p)out.textContent=p.qty===null?'This product is currently untracked.':'Currently '+p.qty+' in stock.';}
+function addStockNow(){
+  try{
+    const p=state.products.find(x=>x.id===$('managerProduct').value);
+    if(!p)throw new Error('Please choose a product.');
+    if(p.qty===null)throw new Error('This product is untracked. Use Edit product to set its quantity first.');
+    const amount=managerWhole($('managerAmount').value,'Quantity');
+    if(amount<1)throw new Error('Enter at least 1 item.');
+    if(p.qty+amount>1000000)throw new Error('Quantity is too large.');
+    p.qty+=amount;try{save()}catch(err){p.qty-=amount;throw new Error('Could not save. Check storage space and try again.');}
+    render();showStockQty();managerMsg('Added '+amount+' to '+p.name+'. Now '+p.qty+' in stock. ♡');
+  }catch(err){managerMsg(err.message,true)}
+}
+function addNewProductNow(){
+  try{
+    const name=$('newName').value.trim();if(!name)throw new Error('Give your new product a name.');
+    if(state.products.some(p=>p.name.toLowerCase()===name.toLowerCase()))throw new Error('That name already exists. Use Add stock or Edit product.');
+    const newCat=($('newCategory').value==='__new__' ? $('newCustomCat').value : $('newCategory').value).trim();
+    if(!newCat)throw new Error('Choose or enter a category.');
+    const qty=managerWhole($('newQty').value,'Quantity');
+    const visitor=managerNumber($('newVisitor').value,'Visitor price',true);
+    const local=$('newLocal').value.trim()===''?visitor:managerNumber($('newLocal').value,'Local price',true);
+    // Web Crypto supplies distinct IDs without relying on a server.
+    const id='custom-'+(globalThis.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2));
+    const p={id,name,category:newCat,qty,visitor,local,notes:''};
+    state.products.push(p);try{save()}catch(err){state.products.pop();throw new Error('Could not save the new product.');}
+    category=p.category;term='';$('search').value='';render();
+    setManagerMode('new');managerMsg('Added '+p.name+'! It is ready in your products. ♡');
+  }catch(err){managerMsg(err.message,true)}
+}
+function loadProductEditor(){
+  const p=state.products.find(x=>x.id===$('managerProduct')?.value);if(!p)return;
+  $('editName').value=p.name;$('editCategory').value=p.category;
+  $('editQty').value=p.qty??'';$('editVisitor').value=p.visitor??'';$('editLocal').value=p.local??'';
+  managerMsg('');
+}
+function saveProductEdits(){
+  try{
+    const p=state.products.find(x=>x.id===$('managerProduct').value);if(!p)throw new Error('Choose a product.');
+    const name=$('editName').value.trim(),cat=$('editCategory').value.trim();
+    if(!name||!cat)throw new Error('Name and category cannot be empty.');
+    if(state.products.some(x=>x.id!==p.id&&x.name.toLowerCase()===name.toLowerCase()))throw new Error('Another product already has that name.');
+    const qty=$('editQty').value.trim()===''?null:managerWhole($('editQty').value,'Quantity');
+    const visitor=managerNumber($('editVisitor').value,'Visitor price',true);
+    const local=managerNumber($('editLocal').value,'Local price',true);
+    if(cart[p.id]&&(qty!==null&&qty<cart[p.id]))throw new Error('Your cart has more of this item than the new stock. Remove it from the cart first.');
+    if(cart[p.id]&&(visitor===null||local===null))throw new Error('Remove this item from the cart before making its price TBD.');
+    if(p.qty!==qty&&!confirm('Change '+p.name+' from '+(p.qty??'untracked')+' to '+(qty??'untracked')+' items?'))return;
+    const original={...p};Object.assign(p,{name,category:cat,qty,visitor,local});
+    try{save()}catch(err){Object.assign(p,original);throw new Error('Could not save these changes.');}
+    if(category!== 'All' && !state.products.some(x=>x.category===category))category='All';
+    render();$('managerProduct').value=p.id;managerMsg('Changes saved for '+p.name+'. ♡');
+  }catch(err){managerMsg(err.message,true)}
+}
+setManagerMode('stock');
+
 $('search').addEventListener('input',e=>{term=e.target.value.toLowerCase();render()});render();
 </script><script>if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("./sw.js").catch(()=>{});</script></body></html>
