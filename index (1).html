@@ -1,0 +1,432 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fff7ed"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ish."><title>ish. — market checkout</title><style>
+
+:root{font-family:Georgia,'Times New Roman',serif;color:#28332e;background:#f6f0e5}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 5% 10%,#f9e4d8 0,transparent 27%),#f6f0e5}header{background:#253d38;color:#f9f0de;padding:25px max(18px,calc((100vw - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:7px solid #e6a38d}header strong{font-family:Georgia,serif;font-size:70px;letter-spacing:-5px;font-style:italic;line-height:.9}header small{display:block;font:12px 'Courier New',monospace;letter-spacing:.3px;margin-top:8px}header b{font:700 14px 'Courier New',monospace;text-transform:uppercase;letter-spacing:2px}main{max-width:1120px;margin:auto;padding:25px 18px 60px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:5px 0 25px}.top h1{font-size:clamp(28px,4vw,44px)!important;font-style:italic;letter-spacing:-1px}.muted{color:#69736b;font:13px/1.5 'Courier New',monospace}.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr);gap:20px;margin-top:16px}.panel{background:#fffcf5;border:1.5px solid #d4c8b5;border-radius:6px;padding:22px;box-shadow:5px 5px 0 #e6dac7}h2{font-size:23px;font-style:italic;margin:0 0 16px}button,.btn{font:700 13px 'Courier New',monospace;cursor:pointer;border:1.5px solid #b8b6a8;background:#fffdf7;border-radius:4px;padding:11px;color:#263f3a;transition:transform .1s,background .1s}button:active{transform:scale(.97)}button:hover:not(:disabled){border-color:#e39e86}.selected,.primary{background:#28483f!important;color:#fffdf4!important;border-color:#28483f!important}.tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:15px}.tabs button{white-space:nowrap}.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product{text-align:left;min-height:128px;display:flex;flex-direction:column;justify-content:space-between;background:#f3ede1;border:1.5px solid #d3c8b8;padding:14px;position:relative}.product:nth-child(4n+2){background:#f9e8df}.product:nth-child(4n+3){background:#e8ede5}.product b{font:700 15px/1.3 Georgia,serif}.product span{font:11px 'Courier New',monospace;color:#66716a;margin-top:8px}.product .price{font:700 24px Georgia,serif;color:#26463d;margin-top:9px}.product:disabled{opacity:.4;cursor:not-allowed}.pill{border-radius:3px;background:#e9b4a0;padding:9px 12px;font:700 12px 'Courier New',monospace;transform:rotate(2deg)}.switch{display:flex;background:#ece5d7;padding:5px;border-radius:5px;gap:4px}.switch button{flex:1;border:0;background:transparent}.cartrow{display:flex;gap:8px;align-items:center;border-bottom:1px dashed #d2c5b4;padding:14px 0}.cartrow .item{flex:1;min-width:0;font-size:14px}.cartrow small{display:block;color:#6b7772;font:12px 'Courier New',monospace;margin-top:5px}.qty{display:flex;gap:6px;align-items:center}.qty button{padding:6px 11px}.total{display:flex;justify-content:space-between;align-items:center;font-size:30px;font-weight:800;margin:20px 0;border-top:2px solid #283e38;padding-top:16px}.pay{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.pay button{font-size:12px}.checkout{width:100%;padding:19px;font-size:17px;margin-top:12px;background:#d77f69!important;border-color:#d77f69!important;color:white!important}.checkout:disabled{opacity:.4}.notice{background:#f4e9d1;padding:12px;border-left:4px solid #c88c69;border-radius:2px;font:11px/1.6 'Courier New',monospace;margin-top:16px}.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.tools button{font-size:11px}.history{margin-top:24px}.history div{padding:10px;border-bottom:1px solid #e5ded2;font-size:13px}input{width:100%;padding:13px;border-radius:3px;border:1px solid #c9c3b5;margin-bottom:15px;background:#fffef9;font:13px 'Courier New',monospace}.empty{padding:25px 10px;text-align:center;color:#718078}.status{font:13px 'Courier New',monospace;color:#4c6b60;margin-top:8px}.logo{display:flex;flex-direction:column}.brandline{font:700 11px 'Courier New',monospace;text-transform:uppercase;letter-spacing:2px;color:#9b6757;margin-top:9px}.brandfooter{text-align:center;padding:24px 10px;color:#54685d;font:12px 'Courier New',monospace}.brandfooter b{font-family:Georgia,serif;font-style:italic;font-size:20px;color:#28483f}@media(max-width:740px){.layout{grid-template-columns:1fr}.panel{padding:15px;box-shadow:3px 3px 0 #e6dac7}.products{grid-template-columns:repeat(2,minmax(0,1fr))}header{padding:20px 16px}header strong{font-size:56px}header b{font-size:11px}header small{font-size:9px}main{padding:13px}.top h1{font-size:29px!important}.product{min-height:125px;padding:11px}}
+/* iPhone: never allow a child grid to make the page wider than the screen. */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+main,.top,.layout,.panel,.products,.product{min-width:0}
+.layout{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}
+@media(max-width:740px){
+  header{width:100%;max-width:100%;padding:20px 16px}
+  header .logo,header>div{min-width:0}
+  header strong{font-size:clamp(44px,13vw,56px)}
+  header small{overflow-wrap:anywhere}
+  main{width:100%;max-width:100%;padding:13px}
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .panel{width:100%;min-width:0;max-width:100%;overflow:hidden}
+  .products{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .product{min-width:0;overflow-wrap:anywhere}
+  .tabs{max-width:100%}
+  .top h1{overflow-wrap:anywhere}
+  .pay{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pay button{min-width:0;padding:10px 3px;font-size:11px}
+}
+
+/* Mobile checkout: product cards must never require horizontal page scrolling. */
+@media (max-width: 740px) {
+  html, body { width: 100%; max-width: 100%; margin: 0; overflow-x: clip; }
+  header { display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; gap: 12px; width: 100%; padding: 20px 16px; }
+  header > div { flex: 1 1 140px; min-width: 0; }
+  header > div:last-child { text-align: left !important; }
+  header strong { font-size: 50px; }
+  main { display: block; width: 100%; max-width: 100%; min-width: 0; padding: 15px 13px 60px; }
+  .top, .layout, section, .panel, .products { width: 100%; max-width: 100%; min-width: 0; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) !important; }
+  .panel { padding: 15px; overflow: hidden; }
+  /* One tap-friendly card per row on phones; no hidden products offscreen. */
+  .products { display: grid; grid-template-columns: minmax(0, 1fr) !important; gap: 10px; }
+  .product { width: 100%; max-width: 100%; min-width: 0; min-height: 106px; overflow-wrap: anywhere; }
+  .tabs { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  input { max-width: 100%; min-width: 0; }
+}
+
+/* In-app stock and product management. Compact and touch-friendly. */
+.inventory-manager{margin-top:20px}
+.inventory-manager summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;font:700 21px Georgia,serif;font-style:italic}
+.inventory-manager summary::-webkit-details-marker{display:none}
+.inventory-manager summary::after{content:'＋';font:24px 'Courier New',monospace;color:#b46b54}
+.inventory-manager[open] summary::after{content:'−'}
+.manager-intro{margin:10px 0 15px}
+.manager-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.manager-actions button{flex:1;min-width:115px}
+.manager-form{border-top:1px dashed #d4c8b5;padding-top:16px}
+.manager-form label{display:block;margin:10px 0 5px;font:700 12px 'Courier New',monospace;color:#28483f}
+.manager-form input,.manager-form select{width:100%;max-width:100%;display:block;padding:12px;border:1px solid #c9c3b5;border-radius:4px;margin:0;background:#fffef9;color:#263f3a;font:14px 'Courier New',monospace}
+.manager-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+.manager-form .manager-save{margin-top:16px;width:100%;background:#28483f;color:#fffdf4;font-size:14px;padding:14px}
+.manager-form .manager-message{min-height:20px;font:12px/1.5 'Courier New',monospace;margin-top:10px;color:#28483f}
+.manager-tip{padding:10px;background:#f4e9d1;border-left:4px solid #d77f69;font:12px/1.5 'Courier New',monospace;margin-top:14px}
+@media(max-width:450px){.manager-grid{grid-template-columns:1fr}.manager-actions button{min-width:0;font-size:11px;padding:10px 6px}}
+
+/* ish. Market edition — a small hello, not a whole extra screen */
+.daily{margin:0 0 17px;padding:15px 18px;background:#253d38;color:#fff8ea;border:2px solid #253d38;border-radius:9px;position:relative;box-shadow:4px 4px 0 #d7a48f}
+.daily:before{content:'✳';position:absolute;right:15px;top:11px;font-size:19px;color:#e9ae91}
+.daily-label{display:flex;align-items:center;gap:8px;font:700 11px 'Courier New',monospace;letter-spacing:1.8px;text-transform:uppercase;color:#e8bd9c}
+.daily-line{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:8px 0 3px}
+.daily-amount{font:italic 700 clamp(35px,8vw,55px) Georgia,serif;line-height:1;letter-spacing:-1.4px}
+.daily-bits{font:11px/1.5 'Courier New',monospace;text-align:right;color:#f2dfc8}
+.daily-note{font:italic 13px Georgia,serif;color:#f0cbb6;margin:8px 0 0}
+.daily details{margin-top:9px;border-top:1px solid #647b70;padding-top:8px}
+.daily details summary{font:700 11px 'Courier New',monospace;color:#fff6e9;cursor:pointer;list-style:none;display:inline-block;padding:5px 0}
+.daily details summary::-webkit-details-marker{display:none}
+.daily-more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:7px}
+.daily-more div{border:1px solid #63786b;padding:9px;font:11px/1.5 'Courier New',monospace}
+.daily-more strong{display:block;color:#fff;font-size:15px}
+.shirt-groups{display:grid;gap:8px}
+.shirt-group{background:#f3ede1;border:1.5px solid #d3c8b8;border-radius:5px;overflow:hidden}
+.shirt-group:nth-child(3n+2){background:#f9e8df}.shirt-group:nth-child(3n+3){background:#e8ede5}
+.shirt-group>summary{padding:14px;display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;font:700 17px Georgia,serif;list-style:none}
+.shirt-group>summary::-webkit-details-marker{display:none}
+.shirt-group>summary small{font:11px 'Courier New',monospace;white-space:nowrap;color:#52665a}
+.shirt-options{padding:0 10px 10px;display:grid;gap:5px}
+.shirt-option{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;padding:10px;background:#fffdf8;font:12px/1.4 'Courier New',monospace}
+.shirt-option span{min-width:0}.shirt-option b{display:block;color:#243f35;font-size:15px}
+.shirt-option em{font-style:normal;white-space:nowrap;font-weight:bold;color:#274940}
+@media(max-width:740px){.daily{padding:14px}.daily-more{grid-template-columns:repeat(2,minmax(0,1fr))}.shirt-group>summary{font-size:15px}.shirt-option{padding:10px 8px;font-size:11px}}
+
+/* Kelli signature masthead — deliberately compact on checkout screens. */
+header.ish-masthead{display:block;padding:0 18px;border-bottom:6px solid #e6a38d;background:#253d38;overflow:hidden;position:relative}
+header.ish-masthead:before{content:'';position:absolute;width:240px;height:240px;border:1px solid rgba(246,227,202,.10);border-radius:50%;right:-95px;top:-145px;pointer-events:none}
+.masthead-inner{max-width:1120px;margin:auto;padding:13px 0 12px;position:relative;z-index:1}
+.masthead-kelli{display:flex;align-items:center;gap:10px;color:#f0b49c;font:700 15px 'Courier New',monospace;letter-spacing:-.5px;white-space:nowrap}
+.masthead-star{font-size:21px;line-height:1;color:#f1b49b}
+.masthead-line{flex:1;min-width:10px;border-top:1px dashed rgba(244,215,196,.36);margin:0 5px}
+.masthead-edition{font:700 9px 'Courier New',monospace;letter-spacing:1.4px;color:#e9d5bb}
+.masthead-main{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:6px}
+header.ish-masthead .logo{min-width:0}
+header.ish-masthead .logo strong{font-size:clamp(68px,10vw,110px);letter-spacing:-8px;line-height:.85;text-shadow:3px 3px 0 rgba(230,163,141,.3)}
+header.ish-masthead .logo small{font:12px 'Courier New',monospace;letter-spacing:.3px;margin-top:10px;color:#f3e2ce}
+.masthead-stamp{width:91px;height:91px;flex:0 0 91px;border:2px solid #edb59d;outline:1px dashed rgba(237,181,157,.65);outline-offset:4px;border-radius:50%;transform:rotate(11deg);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f4c4ab;gap:1px}
+.masthead-stamp span{font:700 9px 'Courier New',monospace;letter-spacing:.5px}
+.masthead-stamp b{font:italic 27px Georgia,serif;line-height:1;color:#fff5e7}
+.masthead-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:15px;padding-top:9px;border-top:1px solid rgba(255,245,228,.17);font:700 10px 'Courier New',monospace;letter-spacing:1.25px;color:#e9d2bc}
+.masthead-spark{color:#e9a98e;white-space:nowrap}
+@media(max-width:740px){header.ish-masthead{padding:0 16px;display:block;width:100%;max-width:100%}.masthead-inner{padding:12px 0 10px}.masthead-kelli{gap:7px;font-size:13px}.masthead-edition{font-size:7px;letter-spacing:.5px}.masthead-line{margin:0 1px}.masthead-main{flex-wrap:nowrap;margin-top:9px}.masthead-main>div{flex:none}header.ish-masthead .logo{flex:1;min-width:0}header.ish-masthead .logo strong{font-size:74px;letter-spacing:-6px}header.ish-masthead .logo small{font-size:10px;overflow-wrap:anywhere}.masthead-stamp{width:69px;height:69px;flex:0 0 69px;outline-offset:3px}.masthead-stamp b{font-size:21px}.masthead-stamp span{font-size:7px}.masthead-bottom{margin-top:12px;font-size:8px;letter-spacing:.7px}.masthead-spark{font-size:9px}}
+@media(max-width:350px){.masthead-edition{display:none}.masthead-stamp{width:60px;height:60px;flex-basis:60px}header.ish-masthead .logo strong{font-size:66px}}
+
+/* The Kelli Factor — watercolor, paper, seaside whimsy. Visual layer only. */
+:root{color:#302f2c;background:#fff7ee}
+body{background:radial-gradient(ellipse at 8% 8%,#ffe4e6 0,transparent 31%),radial-gradient(ellipse at 90% 40%,#e7eddc 0,transparent 38%),#fff7ed;color:#302f2c}
+header.ish-masthead{background:radial-gradient(ellipse at 45% 58%,rgba(244,139,159,.48) 0 23%,transparent 62%),repeating-linear-gradient(103deg,transparent 0 19px,rgba(179,132,95,.025) 20px 21px),#fff7ed;border-bottom:2px dashed #d9b69e;color:#24251f;box-shadow:0 5px 18px #b8887620}
+header.ish-masthead:before{content:'♡';border:0;width:auto;height:auto;top:13px;right:6%;font:95px cursive;color:#cc416b;transform:rotate(13deg);opacity:.9}
+.masthead-inner{max-width:1120px;padding:15px 0 14px}
+.masthead-kelli{color:#282521;font:700 16px 'Courier New',monospace;letter-spacing:-.8px;transform:rotate(-1deg);width:fit-content;background:#fff0db;border:1px dashed #dcbfa8;padding:5px 12px;box-shadow:2px 3px 0 #edc8c3}
+.masthead-star{color:#c52d5c}.masthead-line,.masthead-edition{display:none}
+.masthead-main{margin-top:4px;justify-content:flex-start;gap:22px}
+header.ish-masthead .logo strong{display:block;font:italic 900 clamp(78px,15vw,128px) Georgia,serif;letter-spacing:-10px;line-height:.94;color:#22221f;text-shadow:3px 3px 0 #f2a9b8;transform:rotate(-4deg)}
+header.ish-masthead .logo small{font:700 13px 'Courier New',monospace;color:#342e2a;background:#fff1dd;display:inline-block;padding:5px 9px;transform:rotate(-2deg);margin-top:10px;box-shadow:2px 2px 0 #eac3b5}
+.masthead-stamp{border:2px dashed #c55372;outline:0;background:#fbe0e0;color:#49362f;width:82px;height:82px;flex-basis:82px;box-shadow:3px 3px 0 #f0c7b3}
+.masthead-stamp b{color:#a72d58}.masthead-stamp span{color:#5c4b41}
+.masthead-bottom{border-top:0;margin-top:13px;padding-top:0;color:#573b43;font:italic 19px Georgia,serif;letter-spacing:0;text-transform:none}
+.masthead-bottom span:first-child{text-transform:none}.masthead-spark{color:#d14c77}
+main{max-width:1120px}.top{border-bottom:1px dashed #e7b9b7;padding-bottom:12px}.top h1{color:#38302d}.brandline{color:#bd4b70}.pill{background:#e9efdf!important;color:#3e5941!important;border-color:#b4c6a6!important}
+.panel{background:#fffaf2;border:1.5px solid #e9cbb8;box-shadow:3px 4px 0 #eeddd3;border-radius:12px}
+button{border-radius:8px}button.selected,.manager-form .manager-save{background:#b8466b!important;color:#fffaf6!important;border-color:#b8466b!important}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #c85478;outline-offset:2px}
+.daily{background:linear-gradient(115deg,#f9dce0,#ffe9dc 55%,#e9efd9);color:#3a302c;border:1.5px solid #e7b6ae;box-shadow:4px 5px 0 #edc9bf;border-radius:13px}
+.daily:before{content:'♡';color:#c23c68;font-size:30px;top:4px}
+.daily-label{color:#90455b}.daily-amount{color:#7d284b}.daily-bits,.daily-note{color:#6b4b50}.daily details{border-color:#dbadb1}.daily details summary{color:#6d354b}.daily-more div{border-color:#e5bcb4;background:#fffaf5aa}.daily-more strong{color:#7d284b}
+.shirt-group{border-radius:10px;background:#f6f0e6;border-color:#ddc5ba}.shirt-group:nth-child(3n+2){background:#fce8e9}.shirt-group:nth-child(3n+3){background:#e9efdf}
+.shirt-option{background:#fffdf7;border:1px solid #eeded3;border-radius:8px}.shirt-option b,.shirt-option em{color:#7d3552}
+.inventory-manager summary{color:#803c57}.manager-tip{background:#fff0dc;border-color:#cf6a82}
+.shirt-style-filter{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 11px}.shirt-style-filter button{font:700 12px 'Courier New',monospace;background:#fff8f2;border:1px solid #dcb5b4;color:#694a53;padding:10px 12px}.shirt-style-filter button.active{background:#bd4e71;color:white;border-color:#bd4e71}
+.ish-footer{font:italic 18px Georgia,serif;color:#5e4548;text-align:center;padding:24px 10px 14px}.ish-footer span{color:#c3426a}
+@media(max-width:740px){header.ish-masthead{padding:0 15px}.masthead-inner{padding:12px 0 13px}.masthead-kelli{font-size:12px}.masthead-main{gap:15px}header.ish-masthead .logo strong{font-size:clamp(78px,20vw,100px)}header.ish-masthead .logo small{font-size:11px}.masthead-stamp{width:64px;height:64px;flex-basis:64px}.masthead-stamp b{font-size:19px}.masthead-stamp span{font-size:7px}.masthead-bottom{font-size:15px;letter-spacing:0}.masthead-spark{font-size:12px}.daily-amount{font-size:clamp(34px,9vw,51px)}main{padding-top:17px}}
+
+/* ORIGINAL APPROVED ART DIRECTION — layered handmade paper and coastal illustrations */
+body{background:#f9f0e5;background-image:radial-gradient(#d7ac9240 .6px,transparent .6px);background-size:6px 6px}
+header.ish-masthead{overflow:hidden;position:relative;isolation:isolate;min-height:370px;border-bottom:0!important;background:radial-gradient(ellipse 46% 38% at 52% 48%,#f3a0b0 0%,#f5b7bf 50%,transparent 80%),linear-gradient(100deg,#fff4e8,#fff8ed 40%,#fff1e7)!important;box-shadow:none!important}
+header.ish-masthead:before{display:none!important}
+header.ish-masthead:after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:19px;background:#fff9f1;clip-path:polygon(0 38%,5% 67%,10% 32%,17% 60%,25% 22%,32% 60%,39% 28%,46% 63%,54% 35%,61% 62%,69% 26%,77% 67%,85% 33%,92% 59%,100% 30%,100% 100%,0 100%);z-index:3}
+.masthead-inner{position:relative;min-height:350px;max-width:760px;margin:auto;padding:25px 20px 35px!important;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1}
+.hero-pelican,.hero-buoy{position:absolute;z-index:-1;pointer-events:none;filter:drop-shadow(3px 3px 2px #89634c30)}
+.hero-pelican{height:310px;width:auto;left:-22px;bottom:0}.hero-buoy{height:285px;width:auto;right:-10px;bottom:-3px}
+.masthead-kelli{align-self:center;position:relative;z-index:3;font:700 clamp(15px,3.5vw,24px) 'Courier New',monospace!important;letter-spacing:-1px!important;transform:rotate(-5deg);background:#fff0d9!important;padding:9px 15px!important;border:0!important;box-shadow:3px 5px 1px #9b685b3b!important;margin-left:-20px}
+.masthead-kelli span{font:42px cursive;color:#c73863;position:absolute;right:-35px;top:-17px}
+.masthead-main{justify-content:center!important;margin:8px 0 0!important}
+header.ish-masthead .logo{position:relative;text-align:center;z-index:2}
+header.ish-masthead .logo strong{font:italic 900 clamp(118px,22vw,210px)/.87 Georgia,serif!important;letter-spacing:-13px!important;text-shadow:none!important;transform:rotate(-7deg)!important;color:#191a17!important}
+.logo-heart{position:absolute;top:3px;right:-50px;font:90px cursive;color:#c33c66;transform:rotate(13deg)}
+header.ish-masthead .logo small{display:table!important;margin:17px auto 0!important;font:700 clamp(12px,2.3vw,19px) 'Courier New',monospace!important;letter-spacing:-.5px;background:#fff0d9!important;padding:8px 13px!important;box-shadow:3px 4px 1px #a56b6438!important;transform:rotate(-3deg)}
+.masthead-bottom{z-index:2;margin:17px 0 0!important;font:italic clamp(20px,4vw,30px) 'Brush Script MT',Georgia,cursive!important;color:#292321!important;text-align:center;text-shadow:0 2px 2px #fff8ed}
+.masthead-bottom em{font-weight:700;text-decoration:none}
+.hero-birds{position:absolute;right:16%;top:42px;font-size:34px;transform:rotate(-14deg)}
+main{position:relative;background:#fff9f1;max-width:940px!important;padding:12px 22px 35px!important;border-left:2px solid #e7c9ae;border-right:2px solid #e7c9ae;box-shadow:0 10px 25px #8c654c26}
+.welcome-paper{text-align:center;padding:10px 10px 15px;position:relative}
+.welcome-paper h1{font:700 clamp(32px,7vw,49px) 'Courier New',monospace;margin:0;color:#2c2824;letter-spacing:-2px}
+.welcome-paper h1 span{color:#c43b64}.welcome-paper p{font:clamp(13px,2.5vw,18px) Georgia,serif;margin:4px 0 0}
+.kelli-dashboard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:10px 0 18px}
+.kelli-stat{min-width:0;text-align:center;border-radius:19px;padding:13px 5px 14px;display:flex;flex-direction:column;gap:5px;font:700 clamp(11px,2.4vw,16px) Georgia,serif;color:#272620;box-shadow:inset 0 1px #ffffffaa}
+.kelli-stat-sage{background:#dce5d3}.kelli-stat-pink{background:#f9d0c8}.kelli-stat-lime{background:#e5ebc7}.kelli-stat-icon{font-size:27px}.kelli-stat strong{font:700 clamp(17px,3.4vw,29px) Georgia,serif;overflow-wrap:anywhere}
+.kelli-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.kelli-shortcut{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:80px;padding:8px 4px;border:1.5px solid #d4b394;border-radius:15px;text-decoration:none;color:#2d2924;font-size:29px;font-weight:bold;background:radial-gradient(ellipse at 50% 65%,#f4b9c3 0 40%,transparent 71%),#fffaf3}
+.kelli-shortcut:nth-child(2){background:radial-gradient(ellipse at 50% 65%,#cfdcc6 0 40%,transparent 71%),#fffaf3}.kelli-shortcut:nth-child(3){background:radial-gradient(ellipse at 50% 65%,#f3d2ad 0 40%,transparent 71%),#fffaf3}
+.kelli-shortcut span{font:700 clamp(11px,2.5vw,17px) Georgia,serif;text-align:center}
+.daily{margin-bottom:20px}.ish-footer{border-top:6px double #d8b28f;background:#fff0d9;transform:rotate(-1deg);font-size:23px!important;margin-top:30px}
+@media(max-width:740px){header.ish-masthead{min-height:345px}.masthead-inner{min-height:335px;padding:20px 20px 35px!important}.hero-pelican{height:220px;left:-43px;bottom:0}.hero-buoy{height:195px;right:-31px;bottom:0}.masthead-kelli{font-size:15px!important}.masthead-bottom{font-size:19px!important;margin-top:13px!important}header.ish-masthead .logo strong{font-size:clamp(112px,31vw,154px)!important}.logo-heart{right:-33px;top:0;font-size:58px}.hero-birds{right:12%;top:30px;font-size:22px}main{padding:8px 12px 25px!important}.kelli-dashboard{gap:5px}.kelli-stat{padding:10px 2px}.kelli-shortcuts{gap:5px}.kelli-shortcut{min-height:73px}.daily{margin-top:3px}}
+@media(max-width:370px){.hero-pelican{left:-62px;opacity:.9}.hero-buoy{right:-48px;opacity:.9}header.ish-masthead .logo strong{font-size:108px!important}.logo-heart{right:-25px}.masthead-bottom{font-size:17px!important}}
+
+/* Thoughtful department organization in ALL */
+.all-departments{display:grid;gap:10px}
+.department{background:#fffaf3;border:1.5px solid #e4c8b6;border-radius:12px;overflow:hidden;box-shadow:2px 3px 0 #efdfd3}
+.department:nth-child(3n+2){background:#fff0ef}.department:nth-child(3n+3){background:#f0f2e6}
+.department>summary{list-style:none;display:flex;align-items:center;gap:11px;cursor:pointer;padding:15px 13px;min-height:58px}
+.department>summary::-webkit-details-marker{display:none}
+.department-icon{font-size:24px;width:33px;text-align:center;flex:none}
+.department-title{font:700 16px Georgia,serif;color:#573c3c;flex:1}
+.department-title small{display:block;font:11px 'Courier New',monospace;color:#8c6a6b;margin-top:4px}
+.department-count{font:700 11px 'Courier New',monospace;color:#a04e69;white-space:nowrap}
+.department-chevron{color:#b44d70;font-size:17px;transition:transform .15s}.department[open] .department-chevron{transform:rotate(90deg)}
+.department-body{padding:5px 12px 13px;border-top:1px dashed #e5c7bc}
+.department-body .product{margin-top:8px}
+.department-body .shirt-style-filter{margin-top:10px}
+.department-body .shirt-groups{margin-top:8px}
+.department-body .shirt-group{margin-top:8px}
+</style></head><body><header class="ish-masthead"><div class="masthead-inner"><img class="hero-pelican" src="ish_pelican.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><img class="hero-buoy" src="ish_buoy.png" alt="" aria-hidden="true" onerror="this.style.display='none'"><div class="masthead-kelli">it's me, Kelli. <span>♡</span></div><div class="masthead-main"><div class="logo"><strong>ish.</strong><span class="logo-heart" aria-hidden="true">♡</span><small>Because close enough counts.</small></div></div><div class="masthead-bottom">Less accounting. <em>More creating.</em></div></div></header><main><div class="welcome-paper"><h1>Hi, Kelli! <span>♡</span></h1><p>Here's the latest on your creative world...ish.</p></div><div class="kelli-dashboard" aria-label="Live app overview"><div class="kelli-stat kelli-stat-sage"><span class="kelli-stat-icon">▣</span><span>Inventory</span><strong id="kelliStock">—</strong></div><div class="kelli-stat kelli-stat-pink"><span class="kelli-stat-icon">♡</span><span>Sales today</span><strong id="kelliToday">—</strong></div><div class="kelli-stat kelli-stat-lime"><span class="kelli-stat-icon">✦</span><span>All-time sales</span><strong id="kelliAllTime">—</strong></div></div><div class="kelli-shortcuts"><a href="#products" class="kelli-shortcut">♡ <span>Sell an item</span></a><a href="#inventoryManager" class="kelli-shortcut">▣ <span>The Stockroom</span></a><a href="#history" class="kelli-shortcut">✦ <span>The Paper Trail</span></a></div><aside class="daily" aria-label="Today’s sales dashboard"><div class="daily-label">✦ the money part. <span id="dailyDate"></span></div><div class="daily-line"><div class="daily-amount" id="dailySales">$0.00</div><div class="daily-bits"><b id="dailyItems">0</b> items sold<br><b id="dailyTx">0</b> sales today</div></div><p class="daily-note" id="dailyNote">Go make something lovely. ♡</p><details><summary>↗ see the bigger picture</summary><div class="daily-more"><div>All-time sales<strong id="allTimeSales">$0.00</strong></div><div>Transactions<strong id="allTimeTx">0</strong></div><div>Today · Cash<strong id="todayCash">$0.00</strong></div><div>Today · Venmo / Cash App<strong id="todayDigital">$0.00</strong></div></div></details></aside><div class="layout"><section class="panel"><h2>pick their goodies. ♡</h2><input id="search" placeholder="Find a design, shirt size, or item…" aria-label="Search products"><div class="tabs" id="tabs"></div><div class="products" id="products"></div></section><section class="panel"><h2>the little haul.</h2><div class="switch"><button id="visitor" class="selected" onclick="setCustomer('visitor')">Visitor pricing</button><button id="local" onclick="setCustomer('local')">Local pricing ♡</button></div><div id="cart"></div><div class="total"><span>Total</span><span id="total">$0.00</span></div><div class="muted">How are they paying?</div><div class="pay" id="pay"><button onclick="setPayment('Cash')">Cash</button><button onclick="setPayment('Venmo')">Venmo</button><button onclick="setPayment('Cash App')">Cash App</button></div><button class="primary checkout" id="complete" onclick="completeSale()" disabled>Mark paid ✓</button><div class="status" id="status"></div><div class="notice">Prices marked TBD need confirmation before checkout. Payment is collected outside ish.; tap “Mark paid” only after receiving it. Sales and stock stay on this device/browser until exported.</div></section></div><details class="panel inventory-manager" id="inventoryManager"><summary>the stockroom. ♡</summary><div class="manager-intro muted">New arrivals? Fresh idea? Change a price? Do it here — no GitHub required.</div><div class="manager-actions"><button type="button" id="modeStock" onclick="setManagerMode('stock')">＋ Add stock</button><button type="button" id="modeNew" onclick="setManagerMode('new')">✦ New product</button><button type="button" id="modeEdit" onclick="setManagerMode('edit')">✎ Edit product</button></div><div id="managerContent" class="manager-form"></div><div class="manager-tip">Changes save on this device only. Use <b>Save complete backup ♡</b> below to protect your updates. They don't automatically sync to your computer.</div></details><section class="panel history" id="history"><h2>the paper trail. (ugh.)</h2><div class="muted">No account or internet required. Save a complete backup to protect your sales and stock. CSV downloads are handy for spreadsheets, but the complete backup is what you can restore into ish.</div><div class="tools"><button onclick="exportSales()">Download sales CSV</button><button onclick="exportStock()">Download inventory CSV</button><button onclick="exportFullBackup()">Save complete backup ♡</button><button onclick="document.getElementById('restoreFile').click()">Restore complete backup</button><input id="restoreFile" type="file" accept=".json,application/json" hidden onchange="restoreFullBackup(event)"><button onclick="undoSale()">Undo last sale</button><button onclick="resetApp()">Restore opening inventory</button></div><div id="history"></div></section><div class="brandfooter"><b>ish.</b> &nbsp; because close enough counts. &nbsp; ♡<br>less accounting. more creating.</div><div class="ish-footer">Track <span>♡</span> Create <span>♡</span> Sell <span>♡</span> Repeat...ish.</div></main><script>
+const opening=[{"id":"sticker","name":"Sticker","category":"Gifts","qty":50,"visitor":5,"local":5,"notes":"Optional customer freebie at your discretion; checkout price is $5"},{"id": "hat-Youth", "name": "Kids hat + patch", "category": "Hats", "qty": 90, "visitor": 20, "local": 15, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "hat-Mid-tier adult", "name": "OTTO / mid-tier hat + patch", "category": "Hats", "qty": 89, "visitor": 28, "local": 20, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "hat-Premium adult", "name": "Premium hat + patch", "category": "Hats", "qty": 77, "visitor": 38, "local": 28, "notes": "Grouped checkout; adult opening counts estimated"}, {"id": "tote-HO HO HOld the Ferry", "name": "HO HO HOld the Ferry tote", "category": "Totes", "qty": 13, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Nauti List", "name": "Nauti List tote", "category": "Totes", "qty": 7, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Tight Lines. Loose Morals.", "name": "Tight Lines. Loose Morals. tote", "category": "Totes", "qty": 5, "visitor": 24, "local": 18, "notes": ""}, {"id": "tote-Zero Shucks Given", "name": "Zero Shucks Given tote", "category": "Totes", "qty": 6, "visitor": 24, "local": 18, "notes": ""}, {"id": "ditty", "name": "Little ditty bag", "category": "Gifts", "qty": 11, "visitor": 12, "local": 10, "notes": ""}, {"id": "glass", "name": "Pint glass", "category": "Gifts", "qty": 16, "visitor": 12, "local": 8, "notes": ""}, {"id": "shirt-10", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · M", "category": "Shirts", "qty": 2, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-11", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · L", "category": "Shirts", "qty": 9, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-12", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · XL", "category": "Shirts", "qty": 7, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-13", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · 2XL", "category": "Shirts", "qty": 7, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-14", "name": "Drum & Disorderly · Comfort Colors · dark navy · pocket · 3XL", "category": "Shirts", "qty": 3, "visitor": 48, "local": 44, "notes": ""}, {"id": "shirt-15", "name": "Cast First. Questions Later. · Comfort Colors · seafoam blue · short sleeve · Sizes not yet reported", "category": "Shirts", "qty": 9, "visitor": 25, "local": 20, "notes": ""}, {"id": "shirt-16", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · M", "category": "Shirts", "qty": 3, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-17", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-18", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · XL", "category": "Shirts", "qty": 4, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-19", "name": "Drum & Disorderly · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-20", "name": "Tight Lines. Loose Morals. · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-21", "name": "Tight Lines. Loose Morals. · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-22", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · M", "category": "Shirts", "qty": 1, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-23", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · L", "category": "Shirts", "qty": 2, "visitor": 40, "local": 35, "notes": ""}, {"id": "shirt-24", "name": "Cast First. Questions Later. · Comfort Colors · light blue · pocket · 2XL", "category": "Shirts", "qty": 1, "visitor": 45, "local": 41, "notes": ""}, {"id": "shirt-25", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · S", "category": "Shirts", "qty": 2, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-26", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · M", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-27", "name": "Tight Lines. Loose Morals. · Gildan · light blue · no pocket · L", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-28", "name": "Drum & Disorderly · Gildan · light blue · no pocket · M", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-29", "name": "Drum & Disorderly · Gildan · light blue · no pocket · L", "category": "Shirts", "qty": 1, "visitor": 28, "local": 22, "notes": ""}, {"id": "shirt-30", "name": "Drum & Disorderly · Gildan · light blue · no pocket · XL", "category": "Shirts", "qty": 2, "visitor": 28, "local": 22, "notes": ""}, {"id": "onesies", "name": "Baby onesie · assorted", "category": "Baby", "qty": 21, "visitor": 15, "local": 12, "notes": ""}, {"id": "beanies", "name": "Beanie + patch · assorted", "category": "Hats", "qty": 12, "visitor": 22, "local": 18, "notes": ""}, {"id": "extra-Extra small patch", "name": "Extra small patch", "category": "Add-ons", "qty": null, "visitor": 6, "local": 5, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Extra large patch", "name": "Extra large patch", "category": "Add-ons", "qty": null, "visitor": 8, "local": 6, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Extra leatherette patch", "name": "Extra leatherette patch", "category": "Add-ons", "qty": null, "visitor": 12, "local": 10, "notes": "Patch stock not counted; no inventory decrement"}, {"id": "extra-Leatherette upgrade on included patch", "name": "Leatherette upgrade", "category": "Add-ons", "qty": null, "visitor": 4, "local": 4, "notes": "Patch stock not counted; no inventory decrement"}];
+const storageKey='ish-market-v1';let state;
+try{state=JSON.parse(localStorage.getItem(storageKey))}catch(e){}
+if(!state||!Array.isArray(state.products)){state={products:structuredClone(opening),sales:[]}}
+// Catalog migrations add new products without changing previously recorded sales or stock.
+// A restored older backup will also receive newly introduced products on the next app load.
+if(state.catalogVersion!==7 || !state.products.some(p=>p.id==='sticker')){
+  // One-time delivery: add 20 premium hats on upgrade from prior catalog versions.
+  if((state.catalogVersion||0)<7){
+    const premium=state.products.find(p=>p.id==='hat-Premium adult');
+    if(premium && typeof premium.qty==='number') premium.qty+=20;
+  }
+  const latest=new Map(opening.map(p=>[p.id,p]));
+  state.products=state.products.map(p=>{
+    const fresh=latest.get(p.id);
+    return fresh?{...p,name:fresh.name,visitor:fresh.visitor,local:fresh.local,notes:fresh.notes}:p;
+  });
+  const existing=new Set(state.products.map(p=>p.id));
+  for(const fresh of opening){if(!existing.has(fresh.id))state.products.push(structuredClone(fresh));}
+  state.catalogVersion=7;
+  localStorage.setItem(storageKey,JSON.stringify(state));
+}
+let cart={},customer='visitor',payment='',category='All',term='';
+const $=id=>document.getElementById(id),money=n=>'$'+Number(n||0).toFixed(2),save=()=>localStorage.setItem(storageKey,JSON.stringify(state));
+function setCustomer(v){customer=v;$('visitor').classList.toggle('selected',v==='visitor');$('local').classList.toggle('selected',v==='local');render()}
+function setPayment(v){payment=v;document.querySelectorAll('#pay button').forEach(b=>b.classList.toggle('selected',b.textContent===v));renderCart()}
+function available(p){return p.qty===null?Infinity:p.qty-(cart[p.id]||0)}
+function renderDashboard(){
+ const today=new Date();const dateLabel=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric'}).format(today);
+ $('dailyDate').textContent='· '+dateLabel;
+ const todayKey=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+ const onDay=s=>{const d=new Date(s.date);return !Number.isNaN(d.getTime()) && (d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate())===todayKey};
+ const daily=state.sales.filter(onDay),sales=daily.reduce((n,s)=>n+Number(s.total||0),0),units=daily.reduce((n,s)=>n+s.lines.reduce((x,l)=>x+l.qty,0),0);
+ $('dailySales').textContent=money(sales);$('dailyTx').textContent=daily.length;$('dailyItems').textContent=units;
+ $('dailyNote').textContent=daily.length?'Look at you, making money doing things you love. ♡':'Go make something lovely. ♡';
+ $('allTimeSales').textContent=money(state.sales.reduce((n,s)=>n+Number(s.total||0),0));$('allTimeTx').textContent=state.sales.length;
+ $('todayCash').textContent=money(daily.filter(s=>s.payment==='Cash').reduce((n,s)=>n+Number(s.total||0),0));
+ $('todayDigital').textContent=money(daily.filter(s=>s.payment!=='Cash').reduce((n,s)=>n+Number(s.total||0),0));
+}
+let shirtStyle='All styles';
+let openDepartments=new Set();
+function shirtSleeve(p){const n=p.name.toLowerCase();return /(long sleeve|long-sleeve|\bls\b)/.test(n)?'Long sleeve':/(short sleeve|short-sleeve|\bss\b)/.test(n)?'Short sleeve':'Other'}
+function renderShirtGroups(items){
+ const styles=['All styles','Short sleeve','Long sleeve'];
+ const filter=`<div class="shirt-style-filter" aria-label="Filter shirts by sleeve">${styles.map(s=>`<button type="button" data-shirt-style="${s}" class="${shirtStyle===s?'active':''}">${s}</button>`).join('')}</div>`;
+ items=shirtStyle==='All styles'?items:items.filter(p=>shirtSleeve(p)===shirtStyle);
+ const groups=new Map();for(const p of items){const label=p.name.split(' · ')[0];if(!groups.has(label))groups.set(label,[]);groups.get(label).push(p)}
+ return filter+'<div class="shirt-groups">'+[...groups.entries()].sort(([a],[b])=>a.localeCompare(b)).map(([design,options])=>{
+ const valid=options.reduce((n,p)=>n+Math.max(0,p.qty||0),0);
+ const buttons=options.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})).map(p=>{
+  const parts=p.name.split(' · ');const size=parts.at(-1),style=parts.slice(1,-1).join(' · ');
+  return `<button class="shirt-option" data-id="${escapeHTML(p.id)}" ${available(p)<=0?'disabled':''}><span><b>${escapeHTML(size)}</b>${escapeHTML(style)}<br>${p.qty===null?'untracked':p.qty+' left'}</span><em>${p[customer]===null?'TBD':money(p[customer])} ＋</em></button>`
+ }).join('');
+ return `<details class="shirt-group"><summary><span>${escapeHTML(design)}</span><small>${valid} left ▾</small></summary><div class="shirt-options">${buttons}</div></details>`
+ }).join('')+'</div>';
+}
+function productButtons(items){return items.map(p=>`<button class="product" data-id="${escapeHTML(p.id)}" ${available(p)<=0?'disabled':''}><b>${escapeHTML(p.name)}</b><span>${p.qty===null?'Untracked':p.qty+' left'}${p.notes&&p.notes.includes('estimated')?' · estimated':''}</span><div class="price">${p[customer]===null?'Price TBD':money(p[customer])}</div></button>`).join('')}
+const departments=[
+ {name:'Hats & Beanies',icon:'🧢',hint:'Find your perfect topper',cats:['Hats']},
+ {name:'Shirts',icon:'👕',hint:'Pick a design, then a size',cats:['Shirts']},
+ {name:'Totes',icon:'🛍️',hint:'Carry the cute stuff',cats:['Totes']},
+ {name:'Baby',icon:'🍼',hint:'Little islanders',cats:['Baby']},
+ {name:'Gifts & Accessories',icon:'🎁',hint:'Small things, big smiles',cats:['Gifts']},
+ {name:'Patches & Add-ons',icon:'💗',hint:'A little something extra',cats:['Add-ons']}
+];
+function renderAllDepartments(items){
+ const known=new Set(departments.flatMap(d=>d.cats));
+ const extras=[...new Set(items.map(p=>p.category))].filter(c=>!known.has(c)).sort().map(c=>({name:c,icon:'✦',hint:'More little treasures',cats:[c]}));
+ return '<div class="all-departments">'+[...departments,...extras].map(d=>{
+  const products=items.filter(p=>d.cats.includes(p.category));if(!products.length)return '';
+  const units=products.reduce((n,p)=>n+(p.qty||0),0);
+  const content=d.cats.includes('Shirts')&&!term?renderShirtGroups(products):productButtons(products.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})));
+  return `<details class="department" ${term||openDepartments.has(d.name)?'open':''}><summary><span class="department-icon" aria-hidden="true">${d.icon}</span><span class="department-title">${escapeHTML(d.name)}<small>${escapeHTML(d.hint)}</small></span><span class="department-count">${units} left</span><span class="department-chevron" aria-hidden="true">›</span></summary><div class="department-body">${content}</div></details>`
+ }).join('')+'</div>';
+}
+function render(){
+ let cats=['All',...new Set(state.products.map(p=>p.category))];
+ $('tabs').innerHTML=cats.map(c=>`<button class="${category===c?'selected':''}" data-cat="${escapeHTML(c)}">${escapeHTML(c)}</button>`).join('');
+ document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{category=b.dataset.cat;render()});
+ let filtered=state.products.filter(p=>(category==='All'||p.category===category)&&(!term||p.name.toLowerCase().includes(term)));
+ if(category==='Shirts')filtered.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'}));
+ $('products').innerHTML=(category==='All'?renderAllDepartments(filtered):(category==='Shirts'&&!term?renderShirtGroups(filtered):productButtons(filtered)))||'<div class="empty">No matches</div>';
+ document.querySelectorAll('.product,.shirt-option').forEach(b=>b.onclick=()=>addItem(b.dataset.id));
+ document.querySelectorAll('.department').forEach(el=>el.addEventListener('toggle',()=>{const name=el.querySelector('.department-title')?.firstChild?.textContent;if(!name)return;if(el.open)openDepartments.add(name);else openDepartments.delete(name)}));
+ $('stockSummary').textContent=state.products.reduce((n,p)=>n+(p.qty||0),0)+' items remaining';renderCart();renderHistory();renderDashboard();updateManagerChoices();
+}
+document.getElementById('products').addEventListener('click',e=>{const b=e.target.closest('[data-shirt-style]');if(!b)return;shirtStyle=b.dataset.shirtStyle;render();});
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function addItem(id){let p=state.products.find(x=>x.id===id);if(p[customer]===null){alert('Price TBD — confirm a price before selling this item.');return}if(available(p)<=0)return;cart[id]=(cart[id]||0)+1;render()}
+function changeQty(id,n){cart[id]=(cart[id]||0)+n;if(cart[id]<=0)delete cart[id];render()}
+function renderCart(){let items=Object.entries(cart);$('cart').innerHTML=items.length?items.map(([id,q])=>{let p=state.products.find(x=>x.id===id);return `<div class="cartrow"><div class="item"><b>${escapeHTML(p.name)}</b><small>${money(p[customer])} each</small></div><div class="qty"><button data-id="${escapeHTML(id)}" data-n="-1">−</button>${q}<button data-id="${escapeHTML(id)}" data-n="1" ${available(p)<=0?'disabled':''}>+</button></div></div>`}).join(''):'<div class="empty">Nothing in the cart yet.<br>Tap something cute. ♡</div>';document.querySelectorAll('.qty button').forEach(b=>b.onclick=()=>changeQty(b.dataset.id,Number(b.dataset.n)));let sum=items.reduce((n,[id,q])=>n+state.products.find(p=>p.id===id)[customer]*q,0);$('total').textContent=money(sum);$('complete').disabled=!items.length||!payment;$('complete').textContent=payment?'Mark '+payment+' paid ✓':'Choose payment, then mark paid'}
+function completeSale(){let lines=Object.entries(cart).map(([id,q])=>{let p=state.products.find(x=>x.id===id);return {id,name:p.name,qty:q,unitPrice:p[customer]}});if(!lines.length||!payment)return;let total=lines.reduce((n,l)=>n+l.qty*l.unitPrice,0);if(!confirm('Received '+money(total)+' by '+payment+'? Record this sale and deduct inventory?'))return;for(let l of lines){let p=state.products.find(x=>x.id===l.id);if(p.qty!==null)p.qty-=l.qty}state.sales.push({date:new Date().toISOString(),customer,payment,total,lines});cart={};payment='';document.querySelectorAll('#pay button').forEach(b=>b.classList.remove('selected'));save();$('status').textContent='Sale saved! ♡ Inventory updated on this device.';render()}
+function renderHistory(){let sales=state.sales.slice(-5).reverse();$('history').innerHTML=sales.length?sales.map(s=>`<div><b>${money(s.total)}</b> · ${escapeHTML(s.payment)} · ${s.customer==='local'?'Local':'Visitor'} · ${new Date(s.date).toLocaleString()}<br><span class="muted">${s.lines.map(l=>l.qty+'× '+escapeHTML(l.name)).join(', ')}</span></div>`).join(''):'<div class="muted">No sales yet. You can make a pretend sale and undo it.</div>'}
+function undoSale(){if(!state.sales.length){alert('No sales to undo.');return}if(!confirm('Undo the most recent sale and put its items back into inventory?'))return;let s=state.sales.pop();s.lines.forEach(l=>{let p=state.products.find(x=>x.id===l.id);if(p&&p.qty!==null)p.qty+=l.qty});save();render()}
+function csv(rows){return rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n')}
+function download(name,content){let blob=new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function exportStock(){download('ish_inventory_backup.csv',csv([['Product','Category','Quantity remaining','Visitor price','Local price'],...state.products.map(p=>[p.name,p.category,p.qty,p.visitor,p.local])]))}
+function exportSales(){download('ish_sales_backup.csv',csv([['Date','Customer','Payment','Product','Quantity','Unit price','Line total'],...state.sales.flatMap(s=>s.lines.map(l=>[s.date,s.customer,s.payment,l.name,l.qty,l.unitPrice,l.qty*l.unitPrice]))]))}
+function exportFullBackup(){
+  const payload={app:'ish-market',formatVersion:1,exportedAt:new Date().toISOString(),state:{products:state.products,sales:state.sales,catalogVersion:state.catalogVersion||6}};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');const url=URL.createObjectURL(blob);
+  a.href=url;a.download='ish_complete_backup_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+  $('status').textContent='Complete backup downloaded. Keep this JSON file somewhere safe. ♡';
+}
+function validBackup(payload){
+  if(!payload||payload.app!=='ish-market'||payload.formatVersion!==1||!payload.state) return false;
+  const candidate=payload.state;
+  if(!Array.isArray(candidate.products)||!Array.isArray(candidate.sales)||candidate.products.length===0||candidate.products.length>10000||candidate.sales.length>100000) return false;
+  const ids=new Set();
+  for(const p of candidate.products){
+    if(!p||typeof p.id!=='string'||typeof p.name!=='string'||typeof p.category!=='string'||ids.has(p.id)||p.name.length>500||p.id.length>200||!((p.qty===null)||(Number.isSafeInteger(p.qty)&&p.qty>=0))||!(p.visitor===null||Number.isFinite(p.visitor)&&p.visitor>=0)||!(p.local===null||Number.isFinite(p.local)&&p.local>=0))return false;
+    ids.add(p.id);
+  }
+  for(const sale of candidate.sales){
+    if(!sale||typeof sale.date!=='string'||!['visitor','local'].includes(sale.customer)||!['Cash','Venmo','Cash App'].includes(sale.payment)||!Number.isFinite(sale.total)||!Array.isArray(sale.lines))return false;
+    for(const line of sale.lines){if(!line||typeof line.id!=='string'||typeof line.name!=='string'||!Number.isSafeInteger(line.qty)||line.qty<1||!Number.isFinite(line.unitPrice)||line.unitPrice<0)return false;}
+  }
+  return true;
+}
+async function restoreFullBackup(e){
+  const file=e.target.files&&e.target.files[0];e.target.value='';if(!file)return;
+  if(file.size>15*1024*1024){alert('Backup too large. Please choose an ish. complete backup JSON file.');return;}
+  let payload;try{payload=JSON.parse(await file.text())}catch(err){alert('This file could not be read as an ish. backup. Your current data has not changed.');return;}
+  if(!validBackup(payload)){alert('That is not a valid ish. complete backup file. Your current data has not changed.');return;}
+  const backup=payload.state;
+  if(!confirm('Restore '+backup.sales.length+' sales and '+backup.products.reduce((n,p)=>n+(p.qty||0),0)+' remaining items from this backup? This REPLACES the sales and quantities currently on this browser. Cancel to keep your existing data.'))return;
+  if(!confirm('Last check: have you downloaded a complete backup of your CURRENT data first? Restoring replaces it.'))return;
+  const replacement={products:backup.products,sales:backup.sales,catalogVersion:backup.catalogVersion||5};
+  try{localStorage.setItem(storageKey,JSON.stringify(replacement))}catch(err){alert('Could not save the restored data in this browser. Nothing was changed.');return;}
+  state=replacement; if(!state.products.some(p=>p.id==='sticker')){state.products.push(structuredClone(opening.find(p=>p.id==='sticker')));localStorage.setItem(storageKey,JSON.stringify(state));} if((state.catalogVersion||0)<7){const p=state.products.find(p=>p.id==='hat-Premium adult');if(p&&typeof p.qty==='number')p.qty+=20;state.catalogVersion=7;localStorage.setItem(storageKey,JSON.stringify(state));} cart={};payment='';customer='visitor';category='All';term='';$('search').value='';$('visitor').classList.add('selected');$('local').classList.remove('selected');document.querySelectorAll('#pay button').forEach(b=>b.classList.remove('selected'));
+  $('status').textContent='Backup restored! ♡ '+state.sales.length+' sales and inventory loaded.';render();
+}
+function resetApp(){if(!confirm('Erase ALL sales and restore the original 457 inventory counts on this device? Export backups first.'))return;if(!confirm('Last check: really erase the sales history?'))return;state={products:structuredClone(opening),sales:[]};cart={};save();render()}
+
+// Product management is stored in the same device-local state as checkout.
+// Never mutate opening or reassign IDs: past sales reference those IDs.
+let managerMode='stock';
+function managerMsg(message, bad=false){const el=$('managerFeedback');if(el){el.textContent=message;el.style.color=bad?'#ac4b38':'#28483f';}}
+function managerChoices(selected=''){
+ const grouped=new Map();
+ for(const p of state.products){
+  let group=p.category;
+  if(p.category==='Shirts'){
+   const name=p.name.toLowerCase();
+   const sleeve=/(long sleeve|long-sleeve|\bls\b)/i.test(name)?'Long sleeve':/(short sleeve|short-sleeve|\bss\b)/i.test(name)?'Short sleeve':'Other shirts';
+   group='Shirts / '+sleeve;
+  }
+  if(!grouped.has(group))grouped.set(group,[]);
+  grouped.get(group).push(p);
+ }
+ return [...grouped.entries()].sort(([a],[b])=>a.localeCompare(b)).map(([group,products])=>
+  `<optgroup label="${escapeHTML(group)}">`+products.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})).map(p=>
+   `<option value="${escapeHTML(p.id)}" ${p.id===selected?'selected':''}>${escapeHTML(p.name)}${p.qty===null?' · untracked':' · '+p.qty+' left'}</option>`).join('')+'</optgroup>'
+ ).join('');
+}
+function updateManagerChoices(){
+  const el=$('managerProduct');if(!el)return;
+  const old=el.value;el.innerHTML=managerChoices(old);
+  if(old&&state.products.some(p=>p.id===old))el.value=old;
+}
+function managerNumber(raw,label,allowBlank=false){
+  const value=String(raw).trim();
+  if(allowBlank&&value==='')return null;
+  if(value===''||!/^\d+(?:\.\d{1,2})?$/.test(value)){throw new Error(label+' must be a nonnegative amount (up to 2 decimals).');}
+  const n=Number(value);
+  if(!Number.isFinite(n)||n>1000000)throw new Error(label+' is too large.');
+  return n;
+}
+function managerWhole(raw,label){
+  const v=String(raw).trim();
+  if(!/^\d+$/.test(v)||Number(v)>1000000)throw new Error(label+' must be a whole number from 0 to 1,000,000.');
+  return Number(v);
+}
+function setManagerMode(mode){
+  managerMode=mode;
+  for(const key of ['stock','new','edit'])$('mode'+key[0].toUpperCase()+key.slice(1)).classList.toggle('selected',mode===key);
+  let body='';
+  if(mode==='stock'){
+    body=`<label for="managerProduct">Which product arrived?</label><select id="managerProduct" onchange="showStockQty()">${managerChoices()}</select><div class="muted" id="currentStock"></div><label for="managerAmount">How many are you adding?</label><input id="managerAmount" type="number" min="1" step="1" inputmode="numeric" value="1"><button type="button" class="manager-save" onclick="addStockNow()">Add to stock ♡</button>`;
+  }else if(mode==='new'){
+    body=`<label for="newName">What shall we call it?</label><input id="newName" maxlength="160" placeholder="e.g. Fish charm keychain"><label for="newCategory">Category</label><select id="newCategory"><option value="">Pick a category…</option>${[...new Set(state.products.map(p=>p.category))].map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('')}<option value="__new__">✦ Create a new category</option></select><label for="newCustomCat">New category name (only if needed)</label><input id="newCustomCat" maxlength="60" placeholder="e.g. Charms"><label for="newQty">Starting quantity</label><input id="newQty" type="number" min="0" step="1" inputmode="numeric" value="1"><div class="manager-grid"><div><label for="newVisitor">Visitor price ($)</label><input id="newVisitor" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></div><div><label for="newLocal">Local price ($)</label><input id="newLocal" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Same as visitor"></div></div><div class="muted" style="margin-top:7px">Leave local price blank to use the visitor price. Leave either price blank for “Price TBD.”</div><button type="button" class="manager-save" onclick="addNewProductNow()">Add my new product ♡</button>`;
+  }else{
+    body=`<label for="managerProduct">Which product are we editing?</label><select id="managerProduct" onchange="loadProductEditor()">${managerChoices()}</select><label for="editName">Product name</label><input id="editName" maxlength="160"><label for="editCategory">Category</label><input id="editCategory" maxlength="60"><div class="manager-grid"><div><label for="editQty">Quantity remaining</label><input id="editQty" type="number" min="0" step="1" inputmode="numeric"></div><div><label for="editVisitor">Visitor price ($)</label><input id="editVisitor" type="number" min="0" step="0.01" inputmode="decimal"></div></div><label for="editLocal">Local price ($)</label><input id="editLocal" type="number" min="0" step="0.01" inputmode="decimal"><div class="muted" style="margin-top:7px">Blank price = Price TBD. Quantity blank = untracked. Editing a product won't rewrite past sales.</div><button type="button" class="manager-save" onclick="saveProductEdits()">Save changes ♡</button>`;
+  }
+  $('managerContent').innerHTML=body+'<div class="manager-message" id="managerFeedback" aria-live="polite"></div>';
+  if(mode==='stock')showStockQty();
+  if(mode==='edit')loadProductEditor();
+}
+function showStockQty(){const p=state.products.find(x=>x.id===$('managerProduct')?.value);const out=$('currentStock');if(out&&p)out.textContent=p.qty===null?'This product is currently untracked.':'Currently '+p.qty+' in stock.';}
+function addStockNow(){
+  try{
+    const p=state.products.find(x=>x.id===$('managerProduct').value);
+    if(!p)throw new Error('Please choose a product.');
+    if(p.qty===null)throw new Error('This product is untracked. Use Edit product to set its quantity first.');
+    const amount=managerWhole($('managerAmount').value,'Quantity');
+    if(amount<1)throw new Error('Enter at least 1 item.');
+    if(p.qty+amount>1000000)throw new Error('Quantity is too large.');
+    p.qty+=amount;try{save()}catch(err){p.qty-=amount;throw new Error('Could not save. Check storage space and try again.');}
+    render();showStockQty();managerMsg('Added '+amount+' to '+p.name+'. Now '+p.qty+' in stock. ♡');
+  }catch(err){managerMsg(err.message,true)}
+}
+function addNewProductNow(){
+  try{
+    const name=$('newName').value.trim();if(!name)throw new Error('Give your new product a name.');
+    if(state.products.some(p=>p.name.toLowerCase()===name.toLowerCase()))throw new Error('That name already exists. Use Add stock or Edit product.');
+    const newCat=($('newCategory').value==='__new__' ? $('newCustomCat').value : $('newCategory').value).trim();
+    if(!newCat)throw new Error('Choose or enter a category.');
+    const qty=managerWhole($('newQty').value,'Quantity');
+    const visitor=managerNumber($('newVisitor').value,'Visitor price',true);
+    const local=$('newLocal').value.trim()===''?visitor:managerNumber($('newLocal').value,'Local price',true);
+    // Web Crypto supplies distinct IDs without relying on a server.
+    const id='custom-'+(globalThis.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2));
+    const p={id,name,category:newCat,qty,visitor,local,notes:''};
+    state.products.push(p);try{save()}catch(err){state.products.pop();throw new Error('Could not save the new product.');}
+    category=p.category;term='';$('search').value='';render();
+    setManagerMode('new');managerMsg('Added '+p.name+'! It is ready in your products. ♡');
+  }catch(err){managerMsg(err.message,true)}
+}
+function loadProductEditor(){
+  const p=state.products.find(x=>x.id===$('managerProduct')?.value);if(!p)return;
+  $('editName').value=p.name;$('editCategory').value=p.category;
+  $('editQty').value=p.qty??'';$('editVisitor').value=p.visitor??'';$('editLocal').value=p.local??'';
+  managerMsg('');
+}
+function saveProductEdits(){
+  try{
+    const p=state.products.find(x=>x.id===$('managerProduct').value);if(!p)throw new Error('Choose a product.');
+    const name=$('editName').value.trim(),cat=$('editCategory').value.trim();
+    if(!name||!cat)throw new Error('Name and category cannot be empty.');
+    if(state.products.some(x=>x.id!==p.id&&x.name.toLowerCase()===name.toLowerCase()))throw new Error('Another product already has that name.');
+    const qty=$('editQty').value.trim()===''?null:managerWhole($('editQty').value,'Quantity');
+    const visitor=managerNumber($('editVisitor').value,'Visitor price',true);
+    const local=managerNumber($('editLocal').value,'Local price',true);
+    if(cart[p.id]&&(qty!==null&&qty<cart[p.id]))throw new Error('Your cart has more of this item than the new stock. Remove it from the cart first.');
+    if(cart[p.id]&&(visitor===null||local===null))throw new Error('Remove this item from the cart before making its price TBD.');
+    if(p.qty!==qty&&!confirm('Change '+p.name+' from '+(p.qty??'untracked')+' to '+(qty??'untracked')+' items?'))return;
+    const original={...p};Object.assign(p,{name,category:cat,qty,visitor,local});
+    try{save()}catch(err){Object.assign(p,original);throw new Error('Could not save these changes.');}
+    if(category!== 'All' && !state.products.some(x=>x.category===category))category='All';
+    render();$('managerProduct').value=p.id;managerMsg('Changes saved for '+p.name+'. ♡');
+  }catch(err){managerMsg(err.message,true)}
+}
+setManagerMode('stock');
+
+$('search').addEventListener('input',e=>{term=e.target.value.toLowerCase();render()});render();
+</script><script>if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("./sw.js").catch(()=>{});</script><script>(function(){function update(){let stock=document.getElementById('stockSummary'),today=document.getElementById('dailySales'),all=document.getElementById('allTimeSales');let a=document.getElementById('kelliStock'),b=document.getElementById('kelliToday'),c=document.getElementById('kelliAllTime');if(stock&&a){let m=stock.textContent.match(/[\d,]+/);a.textContent=m?m[0]+' items':'—'}if(today&&b)b.textContent=today.textContent;if(all&&c)c.textContent=all.textContent}update();let target=document.getElementById('dailySales');if(target)new MutationObserver(update).observe(target,{childList:true,characterData:true,subtree:true});let stock=document.getElementById('stockSummary');if(stock)new MutationObserver(update).observe(stock,{childList:true,characterData:true,subtree:true});let all=document.getElementById('allTimeSales');if(all)new MutationObserver(update).observe(all,{childList:true,characterData:true,subtree:true});})();</script></body></html>
